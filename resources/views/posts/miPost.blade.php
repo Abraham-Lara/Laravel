@@ -7,7 +7,9 @@
 <h2>Detalle Servicio</h2>
 <div class="row">
 
-        @if ($post->user_id =! $post->user->id )
+       @auth
+           
+       
         <div class="col">
             <button class="btn btn-info" ><a style="text-decoration: none; color:azure;" href="{{route('editar', $post->enlace)}}">Editar</a></button>
         </div>
@@ -18,7 +20,7 @@
                 @csrf @method('DELETE')
             <button class="btn btn-danger" >Eliminar</button>
         </div>      
-        @endif
+    @endauth
     
 </div>
 
@@ -35,30 +37,4 @@
 
 <br>
 <br>
-@auth
-
-
-<div class="container">
- 
-<div class="col"></div>
-
-<div class="col">
-    
-<p><strong>¿Desesa preguntar más sobre el servicio?.¡Haslo Aqui!</strong></p>
-
-@include('chats._form-chat')
-</div>
-</div>
-
-
-
-@endauth
-
-
-
-</form>
-
-
-
-
 @endsection

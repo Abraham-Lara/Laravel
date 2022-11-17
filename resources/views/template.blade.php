@@ -28,9 +28,10 @@
 
          @else
          <a class="navbar-brand" href="{{route('blog')}}">Servicios</a>
+         <a class="navbar-brand" href="{{route('mi-servicios')}}">Mis Servicios</a>
          <a class="navbar-brand" href="{{route('chat')}}">Mensaje</a>
          <a class="navbar-brand" href="{{route('chatRec')}}">Mensajes Recibidos</a>
-         <button style="margin-left:600px " class="btn btn-outline-danger"><a class="navbar-brand" href="#" onclick="event.preventDefault();
+         <button style="margin-left:400px " class="btn btn-outline-danger"><a class="navbar-brand" href="#" onclick="event.preventDefault();
           document.getElementById('logout-form').submit();">Cerrar Sesión</a></button>
      @endguest
 

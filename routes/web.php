@@ -27,6 +27,7 @@ Route::controller(PageController::class)->group(function () {
 
 Route::controller(BlogController::class)->group(function () {
     Route::get('blog',            'blog')->name('blog');
+    Route::get('servicio',     'servicios')->name('mi-servicios');
 
     Route::get('post/crear',   'crear')->name('create');
     Route::post('blog',       'store')->name('crear-post');
@@ -38,6 +39,7 @@ Route::controller(BlogController::class)->group(function () {
 
 
     Route::get('post/{post:enlace}',     'post')->name('post');
+    Route::get('post/{post:enlace}/servicio',     'postUser')->name('post-servicio');
     
 });
 

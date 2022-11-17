@@ -3,7 +3,7 @@
 
 
 <div class="container ">
-    <h2>Bienvenid@ a Empresa Virtual:  {{auth()->user()->name}}</h2>
+    <h2>Bienvenid@ a Empresa Virtual</h2>
     <div class="row">
       <div class="col">
         <h1 style="align-items: center; margin-top: 80px"> 
@@ -17,4 +17,8 @@
     </div>
   </div>
     
+ <footer style="margin-top: 10px"> <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+  © 2022 Copyright: Empresa Virtual by Abraham 
+  <a class="text-reset fw-bold" href="https://google.com/">Google</a>
+</div></footer>
 @endsection

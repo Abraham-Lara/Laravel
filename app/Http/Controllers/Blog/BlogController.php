@@ -25,11 +25,32 @@ class BlogController extends Controller
         ->latest()->get();
         return view('posts.blog', ['posts' => $posts]);
     }
+
+    public function servicios()
+    {
+        $usuarioA= auth()->user()->id;
+        $posts = Post::where('posts.user_id','=',$usuarioA)
+        ->latest()->get();
+        return view('posts.servicios', ['posts' => $posts]);
+    }
+
+    
+
+
+
     //Post en especifico
     public function post(Post $post)
     {
         return view('posts.post', ['post' => $post]);
     }
+
+
+    public function postUser(Post $post)
+    {
+        return view('posts.miPost', ['post' => $post]);
+    }
+
+
 
     public function crear(Post $post)
     {
