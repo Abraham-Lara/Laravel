@@ -30,16 +30,4 @@
         </table>
     
 
-    <div class="container" style="float:right; margin-botton:">
-        
-             @auth
-    
-                <button class="btn btn-success">
-                    <a style="text-decoration: none; color:aliceblue" href="{{route('create')}}">Crear nuevo servicio</a> 
-                </button>
-
-             @endauth 
-     
-
-    </div>
 @endsection

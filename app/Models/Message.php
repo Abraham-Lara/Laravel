@@ -9,7 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable =['user_id','post_id','nombre_chat','mensaje',];
+    protected $fillable =['user_id','post_id','nombre_chat','mensaje','titulo'];
 
     public function users()
     {
@@ -17,10 +17,10 @@ class Message extends Model
     }
 
     
-    public function posts()
+    /*public function posts()
     {
         return $this->belongsTo(Post::class);
-    }
+    }*/
 
     
 }

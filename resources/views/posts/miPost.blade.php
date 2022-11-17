@@ -18,7 +18,7 @@
         <div class="col">
             <form method="POST" action="{{route('eliminar', $post)}}">
                 @csrf @method('DELETE')
-            <button class="btn btn-danger" >Eliminar</button>
+            <button class="btn btn-danger" disabled>Eliminar</button>
         </div>      
     @endauth
     

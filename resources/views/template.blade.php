@@ -24,7 +24,7 @@
     
         @guest
         
-        <a class="navbar-brand" href="{{route('login')}}">Login</a>
+        <a class="navbar-brand" href="{{route('login')}}">Iniciar Sesión</a>
 
          @else
          <a class="navbar-brand" href="{{route('blog')}}">Servicios</a>

@@ -38,11 +38,13 @@ class ChatController extends Controller
             'user_id' => auth()->user()->id,
             'post_id' => $post->id,
             'mensaje' => request('mensaje'),
+            'titulo' => $servicio,
 
 
         ]);
 
-        return redirect()->route('chat')
+
+       return redirect()->route('chat')
             ->with('service', $servicio);
     }
 
@@ -53,7 +55,7 @@ class ChatController extends Controller
         $user = auth()->user()->id;
 
 
-        $mensajeR = Message::select('users.id', 'messages.mensaje', 'messages.created_at' )
+        $mensajeR = Message::select('users.id', 'messages.mensaje','messages.titulo', 'users.name','messages.created_at' )
             ->leftjoin('users', 'messages.post_id', '=', 'users.id')
             ->where('messages.post_id',$user)
             ->get();

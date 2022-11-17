@@ -9,8 +9,9 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Mensaje</th>
+            <th scope="col">Para Servicio:</th>
+            <th scope="col">Remitente:</th>
             <th scope="col">Fecha</th>
-            <th scope="col">Eliminar</th>
         </tr>        
 
 </div>
@@ -20,8 +21,9 @@
     <tr>
         <td>{{$item->id}}</td>
         <td>{{$item->mensaje}}</td>
+        <td>{{$item->titulo}}</td>
+        <td>{{$item->name}}</td>
         <td>{{$item->created_at->format('d-yy h:i')}}</td>
-        <td>Eliminar</td>
     </tr>
    
 
