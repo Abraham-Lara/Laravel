@@ -1,10 +1,12 @@
 @extends('template')
 @section('content')
+    <div class="container">
 
-    <h1> Crear nuevo servicio</h1>
-
-<form method="POST" action="{{route('crear-post')}}">
-   @include('posts._form',  ['btnText' => 'Crear'])
-</form>
-   
+        <h3> Crear nuevo servicio</h3>
+      
+            <form method="POST" action="{{ route('crear-post') }}">
+                @include('posts._form', ['btnText' => 'Crear'])
+            </form>
+        
+    </div>
 @endsection

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Chat;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\Post;
-use App\Models\Sala;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +29,7 @@ class ChatController extends Controller
 
     public function store(Post $post)
     {
-
         $servicio = $post->titulo;
-
         $mensaje = Message::create([
 
             'user_id' => auth()->user()->id,
@@ -44,7 +41,7 @@ class ChatController extends Controller
         ]);
 
 
-       return redirect()->route('chat')
+        return redirect()->route('chat')
             ->with('service', $servicio);
     }
 
@@ -55,13 +52,12 @@ class ChatController extends Controller
         $user = auth()->user()->id;
 
 
-        $mensajeR = Message::select('users.id', 'messages.mensaje','messages.titulo', 'users.name','messages.created_at' )
+        $mensajeR = Message::select('users.id', 'messages.mensaje', 'messages.titulo', 'users.name', 'messages.created_at')
             ->leftjoin('users', 'messages.post_id', '=', 'users.id')
-            ->where('messages.post_id',$user)
+            ->where('messages.post_id', $user)
             ->get();
 
-        return view('chats._chatRecibido',['mensajeR' =>$mensajeR] );
-
+        return view('chats._chatRecibido', ['mensajeR' => $mensajeR]);
     }
 }
 
@@ -77,8 +73,8 @@ class ChatController extends Controller
  * chats belongs to
  */
 
- /**
+/**
   
  
 
-  */
+ */

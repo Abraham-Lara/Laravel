@@ -3,40 +3,35 @@
 namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\createPostRequest;
 use App\Models\Post;
-use App\Models\Sala;
+use App\Http\Requests\createPostRequest;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-
-    public function __construct()
+    function __construnct()
     {
-        $this->middleware('auth')->except('blog', 'post');
+        $this->middleware('permission:ver-blog|crear-blog|editar-blog|borrar-blog')->only('index');
+        $this->middleware('permission:crear-blog', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-blog', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
     }
 
-    //Listar de la DB
     public function blog()
     {
-        $usuarioA= auth()->user()->id;
-        $posts = Post::where('posts.user_id','<>',$usuarioA)
-        ->latest()->get();
+        $usuarioA = auth()->user()->id;
+        $posts = Post::where('posts.user_id', '<>', $usuarioA)
+            ->latest()->paginate(5);
         return view('posts.blog', ['posts' => $posts]);
     }
 
     public function servicios()
     {
-        $usuarioA= auth()->user()->id;
-        $posts = Post::where('posts.user_id','=',$usuarioA)
-        ->latest()->get();
+        $usuarioA = auth()->user()->id;
+        $posts = Post::where('posts.user_id', '=', $usuarioA)
+            ->latest()->get();
         return view('posts.servicios', ['posts' => $posts]);
     }
-
-    
-
-
 
     //Post en especifico
     public function post(Post $post)
@@ -44,13 +39,11 @@ class BlogController extends Controller
         return view('posts.post', ['post' => $post]);
     }
 
-
+    //Autor post
     public function postUser(Post $post)
     {
         return view('posts.miPost', ['post' => $post]);
     }
-
-
 
     public function crear(Post $post)
     {
@@ -59,7 +52,7 @@ class BlogController extends Controller
 
     public function store(createPostRequest $requestvalidate)
     {
-        $usuarioA= auth()->user()->id;
+        $usuarioA = auth()->user()->id;
         $requestvalidate->validated();
         Post::create([
             'user_id' => $usuarioA,
@@ -83,7 +76,6 @@ class BlogController extends Controller
         $post->update([
 
             'titulo' => $title = request('titulo'),
-
             'enlace' => Str::slug($title),
             'cuerpo' => request('cuerpo')
         ]);
@@ -97,5 +89,4 @@ class BlogController extends Controller
 
         return redirect()->route('blog');
     }
-
 }

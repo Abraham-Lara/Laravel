@@ -24,6 +24,7 @@
         <td>{{$item->titulo}}</td>
         <td>{{$item->name}}</td>
         <td>{{$item->created_at->format('d-yy h:i')}}</td>
+       
     </tr>
    
 

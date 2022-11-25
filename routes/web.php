@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Blog\BlogController;
-use App\Http\Controllers\Blog\SalasVistaController;
 use App\Http\Controllers\Chat\ChatController;
-use App\Http\Controllers\Chat\SalaController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\UserController;
 
 use Facade\FlareClient\View;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +48,12 @@ Route::controller(ChatController::class)->group(function(){
     Route::post('enviarMensaje/{post:id}',              'store')->name('sendMessage');
     Route::get('chat/recibido',              'chatRecibidos')->name('chatRec');
 
+
+});
+
+Route::group(['middleware' =>['auth']],function(){
+    Route::resource('roles',RolController::class);
+    Route::resource('usuarios',UserController::class);
 
 });
 
