@@ -27,16 +27,29 @@
 
                 @guest
 
-                    <a class="navbar-brand" href="{{ route('login') }}"><small>Iniciar Sesión</small> </a>
-                    <a class="navbar-brand" href="{{ route('register') }}"> <small>Registrarme</small> </a>
+                    
+                    
+                    @can('ver-user')
+                        <a class="navbar-brand" href="{{ route('register') }}"> <small>Registrar</small> </a>
+                    @endcan
                 @else
-                    <a class="navbar-brand" href="{{ route('blog') }}"><small> Blog</small></a>
-                    <a class="navbar-brand" href="{{ route('usuarios.index') }}"><small> Usuarios </small></a>
-                    <a class="navbar-brand" href="{{ route('roles.index') }}"><small> Roles </small></a>
+                    @can('ver-blog')
+                        <a class="navbar-brand" href="{{ route('blog') }}"><small> Blog</small></a>
+                    @endcan
+
+                    @can('ver-user')
+                        <a class="navbar-brand" href="{{ route('usuarios.index') }}"><small> Usuarios </small></a>
+                    @endcan
+
+                    @can('ver-rol')
+                        <a class="navbar-brand" href="{{ route('roles.index') }}"><small> Roles </small></a>
+                    @endcan
+
+
                     <!--
-                        <a class="navbar-brand" href="{{ route('mi-servicios') }}"> <small> Mis Servicios</small></a>
-                        <a class="navbar-brand" href="{{ route('chat') }}"><small> Mensajes Enviados </small></a>
-                        <a class="navbar-brand" href="{{ route('chatRec') }}"><small>Mensajes Recibidos </small></a> -->
+                            <a class="navbar-brand" href="{{ route('mi-servicios') }}"> <small> Mis Servicios</small></a>
+                            <a class="navbar-brand" href="{{ route('chat') }}"><small> Mensajes Enviados </small></a>
+                            <a class="navbar-brand" href="{{ route('chatRec') }}"><small>Mensajes Recibidos </small></a> -->
 
                     <a class="btn btn-danger btn-sm" class="navbar-brand" href="#"
                         onclick="event.preventDefault();

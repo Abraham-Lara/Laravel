@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    function __construnct()
+    {
+        $this->middleware('permission:ver-user|crear-user|editar-rol|borrar-user', ['only' => ['index']]);
+        $this->middleware('permission:crear-user', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-user', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-user', ['only' => ['destroy']]);
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +65,7 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
-        $user->assignRole($request->$input['roles']);
+        $user->assignRole($request->$input('roles'));
 
         return redirect()->route('usuarios.index');
     }
@@ -96,7 +106,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'. $id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
