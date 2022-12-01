@@ -57,19 +57,12 @@ class UserController extends Controller
     {
         try {
 
-<<<<<<< HEAD
             $this->validate($request, [
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|same:confirm-password',
                 'roles' => 'required'
             ]);
-=======
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
->>>>>>> 0ec21c2f478adaaf88a2f48c2e4c2a9682b97e8d
 
 
             $input = $request->all();
