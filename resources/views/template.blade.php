@@ -27,11 +27,10 @@
 
                 @guest
 
-                    
-                    
-                    @can('ver-user')
-                        <a class="navbar-brand" href="{{ route('register') }}"> <small>Registrar</small> </a>
-                    @endcan
+                    <a class="navbar-brand" href="{{ route('login') }}"><small>Iniciar Sesión</small> </a>
+
+
+                    <a class="navbar-brand" href="{{ route('register') }}"> <small>Registrar</small> </a>
                 @else
                     @can('ver-blog')
                         <a class="navbar-brand" href="{{ route('blog') }}"><small> Blog</small></a>
@@ -47,9 +46,9 @@
 
 
                     <!--
-                            <a class="navbar-brand" href="{{ route('mi-servicios') }}"> <small> Mis Servicios</small></a>
-                            <a class="navbar-brand" href="{{ route('chat') }}"><small> Mensajes Enviados </small></a>
-                            <a class="navbar-brand" href="{{ route('chatRec') }}"><small>Mensajes Recibidos </small></a> -->
+                                <a class="navbar-brand" href="{{ route('mi-servicios') }}"> <small> Mis Servicios</small></a>
+                                <a class="navbar-brand" href="{{ route('chat') }}"><small> Mensajes Enviados </small></a>
+                                <a class="navbar-brand" href="{{ route('chatRec') }}"><small>Mensajes Recibidos </small></a> -->
 
                     <a class="btn btn-danger btn-sm" class="navbar-brand" href="#"
                         onclick="event.preventDefault();
@@ -70,5 +69,7 @@
 
 
     @yield('content')
+
+
 
 </html>

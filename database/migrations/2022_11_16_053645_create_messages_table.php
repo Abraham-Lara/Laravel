@@ -21,6 +21,7 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts');
             $table->string('mensaje');
+            $table->softDeletes();
             $table->timestamps();
             $table->string('titulo');
         });

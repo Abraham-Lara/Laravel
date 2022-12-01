@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\ExceptionController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(PageController::class)->group(function () {
     Route::get('/',               'home')->name('home');
 });
+
 
 Route::controller(BlogController::class)->group(function () {
     Route::get('blog',            'blog')->name('blog');
@@ -52,8 +54,9 @@ Route::controller(ChatController::class)->group(function(){
 });
 
 Route::group(['middleware' =>['auth']],function(){
-    Route::resource('roles',RolController::class);
-    Route::resource('usuarios',UserController::class);
+    Route::resource('roles',RolController::class)->middleware('can:ver-rol');
+    Route::resource('usuarios',UserController::class)->middleware('can:ver-user');
+    
 
 });
 

@@ -3,6 +3,7 @@
     <div class="container">
         <h2>Usuarios</h2>
         <hr class="border border-success border-2 opacity-50">
+        @include('partials.sessions-error')
 
         @can('crear-rol')
             <a class="btn btn-warning" href="{{ route('roles.create') }}">Nuevo</a>

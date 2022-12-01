@@ -17,6 +17,21 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Report or log an exception.
+     *
+     * This is a great spot to send exceptions to Flare, Sentry, Bugsnag, etc.
+     *
+     * @param  \Throwable  $exception
+     * @return void
+     */
+
+    public function report(Throwable $exception)
+    {
+
+        parent::report($exception);
+    }
+
+    /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
      * @var array<int, string>
@@ -26,6 +41,17 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \App\Exceptions\Exceptions\CustomException)  {
+            return $exception->render($request);
+        }
+
+        return parent::render($request, $exception);
+    }
 
     /**
      * Register the exception handling callbacks for the application.

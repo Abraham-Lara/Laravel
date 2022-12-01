@@ -54,15 +54,18 @@ class BlogController extends Controller
     {
         $usuarioA = auth()->user()->id;
         $requestvalidate->validated();
-        Post::create([
-            'user_id' => $usuarioA,
-            'titulo' => $title = request('titulo'),
-            'enlace' => Str::slug($title),
-            'cuerpo' => request('cuerpo'),
+        try {
+            Post::create([
+                'user_id' => $usuarioA,
+                'titulo' => $title = request('titulo'),
+                'enlace' => Str::slug($title),
+                'cuerpo' => request('cuerpo'),
 
-        ]);
-
-        return redirect()->route('blog');
+            ]);
+        } catch (\Throwable $th) {
+            return back()->with('error', '¡Ocurrio un error al crear servicio!');
+        }
+        return redirect()->route('blog')->with('error', '¡Servicio creado con éxito!');
     }
 
     public function editar(Post $post)
@@ -72,21 +75,32 @@ class BlogController extends Controller
 
     public function update(Post $post, createPostRequest $requestvalidate)
     {
-        $requestvalidate->validated();
-        $post->update([
 
-            'titulo' => $title = request('titulo'),
-            'enlace' => Str::slug($title),
-            'cuerpo' => request('cuerpo')
-        ]);
+        try {
+            $requestvalidate->validated();
+            $post->update([
+
+                'titulo' => $title = request('titulo'),
+                'enlace' => Str::slug($title),
+                'cuerpo' => request('cuerpo')
+            ]);
+        } catch (\Throwable $th) {
+
+            return back()->with('error', '¡Ocurrio un error al actualizar!');
+        }
 
         return redirect()->route('blog');
     }
 
     public function destroy(Post $post)
     {
-        $post->delete();
+        try {
 
+            $post->delete();
+        } catch (\Throwable $e) {
+
+            return back()->with('error', '¡Ocurrio un error intentar al eliminar!');
+        }
         return redirect()->route('blog');
     }
 }

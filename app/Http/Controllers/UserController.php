@@ -55,30 +55,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
-        ]);
+        try {
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $user = User::create($input);
-        $user->assignRole($request->$input('roles'));
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|same:confirm-password',
+                'roles' => 'required'
+            ]);
 
-        return redirect()->route('usuarios.index');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+            $input = $request->all();
+            $input['password'] = Hash::make($input['password']);
+            $user = User::create($input);
+            $user->assignRole($request->input('roles'));
+        } catch (\Throwable $th) {
+
+            return back()->with('error', '¡Ocurrio un error al intentar guardar!');
+        }
+
+
+
+        return redirect()->route('usuarios.index')->with('error', '¡Usuario  creado con éxito!');
     }
 
     /**
@@ -89,6 +87,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+
         $user = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
@@ -111,20 +110,27 @@ class UserController extends Controller
             'roles' => 'required'
         ]);
 
-        $input = $request->all();
-        if (!empty($input['password'])) {
-            $input['password'] = Hash::make($input['password']);
-        } else {
-            $input = Arr::except($input, array('password'));
+        try {
+
+            $input = $request->all();
+            if (!empty($input['password'])) {
+                $input['password'] = Hash::make($input['password']);
+            } else {
+                $input = Arr::except($input, array('password'));
+            }
+
+            $user = User::find($id);
+            $user->update($input);
+            DB::table('model_has_roles')
+                ->where('model_id', $id)
+                ->delete();
+
+            $user->assignRole($request->input('roles'));
+        } catch (\Throwable $th) {
+            return back()->with('error', '¡Ocurrio un error al actualizar!');
         }
 
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')
-            ->where('model_id', $id)
-            ->delete();
 
-        $user->assignRole($request->input('roles'));
         return redirect()->route('usuarios.index');
     }
 
@@ -136,7 +142,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+
+        try {
+            User::find($id)->delete();
+        } catch (\Throwable $th) {
+            return back()->with('error', '¡Ocurrio un error al eliminar!');
+        }
+
         return redirect()->route('usuarios.index');
     }
 }

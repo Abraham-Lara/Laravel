@@ -4,10 +4,11 @@
         <h2> Servicios Disponibles</h2>
         <hr class="border border-success border-2 opacity-50">
 
-      
+
+        @include('partials.sessions-error')
         <div class="container" style="margin-bottom: 2rem">
             @can('crear-blog')
-            <a class="btn btn-warning" href="{{ route('create') }}">Nuevo</a>
+                <a class="btn btn-warning" href="{{ route('create') }}">Nuevo</a>
             @endcan
         </div>
         <table class="table table-success table-striped">

@@ -3,6 +3,7 @@
     <div class="container">
         <h2>Usuarios</h2>
         <hr class="border border-success border-2 opacity-50">
+        @include('partials.sessions-error')
         <button class="btn btn-success">
             <a style="text-decoration: none; color:aliceblue" href="{{ route('usuarios.create') }}">Nuevo</a>
         </button>
