@@ -57,7 +57,8 @@ class RolController extends Controller
             $role->syncPermissions($request->input('permission'));
             DB::commit();
 
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            return $e->getMessage();
             DB::rollBack();
         }
 
