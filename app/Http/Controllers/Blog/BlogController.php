@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Http\Requests\createPostRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
@@ -54,16 +55,18 @@ class BlogController extends Controller
     {
         $usuarioA = auth()->user()->id;
         $requestvalidate->validated();
+        DB::beginTransaction();
         try {
             Post::create([
                 'user_id' => $usuarioA,
                 'titulo' => $title = request('titulo'),
                 'enlace' => Str::slug($title),
                 'cuerpo' => request('cuerpo'),
-
             ]);
+            DB::commit();
         } catch (\Throwable $th) {
-            return back()->with('error', '¡Ocurrio un error al crear servicio!');
+            DB::rollBack();
+            return redirect()->route('blog')->with('error', '¡Ocurrio un error al crear servicio!');
         }
         return redirect()->route('blog')->with('error', '¡Servicio creado con éxito!');
     }
@@ -75,6 +78,7 @@ class BlogController extends Controller
 
     public function update(Post $post, createPostRequest $requestvalidate)
     {
+        DB::beginTransaction();
 
         try {
             $requestvalidate->validated();
@@ -84,9 +88,10 @@ class BlogController extends Controller
                 'enlace' => Str::slug($title),
                 'cuerpo' => request('cuerpo')
             ]);
+            DB::commit();
         } catch (\Throwable $th) {
-
-            return back()->with('error', '¡Ocurrio un error al actualizar!');
+            DB::rollBack();
+            return redirect()->route('blog')->with('error', '¡Ocurrio un error al actualizar servicio!');
         }
 
         return redirect()->route('blog');

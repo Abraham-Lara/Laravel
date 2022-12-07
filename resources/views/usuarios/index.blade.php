@@ -32,14 +32,12 @@
                     @endif
                 </td>
                 <td>
-                    
+
                     <a class="btn btn-info" href="{{ route('usuarios.edit', $item->id) }}">Editar</a>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['usuarios.destroy', $item->id], 'style' => 'display:inline']) !!}
                     {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}
                 </td>
-
-
             </tr>
         @endforeach
         </table>

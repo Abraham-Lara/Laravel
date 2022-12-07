@@ -46,14 +46,17 @@
 
 
                     <!--
-                                <a class="navbar-brand" href="{{ route('mi-servicios') }}"> <small> Mis Servicios</small></a>
-                                <a class="navbar-brand" href="{{ route('chat') }}"><small> Mensajes Enviados </small></a>
-                                <a class="navbar-brand" href="{{ route('chatRec') }}"><small>Mensajes Recibidos </small></a> -->
+                                        <a class="navbar-brand" href="{{ route('mi-servicios') }}"> <small> Mis Servicios</small></a>
+                                        <a class="navbar-brand" href="{{ route('chat') }}"><small> Mensajes Enviados </small></a>
+                                        <a class="navbar-brand" href="{{ route('chatRec') }}"><small>Mensajes Recibidos </small></a> -->
 
-                    <a class="btn btn-danger btn-sm" class="navbar-brand" href="#"
+                    <a class="btn btn-danger 
+                    btn-sm" class="navbar-brand" href="#"
                         onclick="event.preventDefault();
           document.getElementById('logout-form').submit();">
                         Cerrar Sesión</a>
+
+
 
                 @endguest
 

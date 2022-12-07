@@ -8,7 +8,7 @@
     <title>@yield('title', 'Laravel')</title>
 
     <link rel="stylesheet" href="/css/app.css">
-    <script src="/js/app.js defer"></script>
+    <script src="/js/app.js" defer></script>
 </head>
 
 <body>

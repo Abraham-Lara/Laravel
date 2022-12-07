@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
-
+use function PHPUnit\Framework\returnSelf;
 
 class UserController extends Controller
 {
@@ -55,6 +55,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
 
             $this->validate($request, [
@@ -69,9 +70,12 @@ class UserController extends Controller
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             $user->assignRole($request->input('roles'));
-        } catch (\Throwable $th) {
+            DB::commit();
+        } catch (\Exception $e) {
 
-            return back()->with('error', '¡Ocurrio un error al intentar guardar!');
+            DB::rollBack();
+
+            return redirect()->route('usuarios.index')->with('error', 'Se ha producido un error');
         }
 
 
@@ -109,6 +113,7 @@ class UserController extends Controller
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
+        DB::beginTransaction();
 
         try {
 
@@ -126,8 +131,10 @@ class UserController extends Controller
                 ->delete();
 
             $user->assignRole($request->input('roles'));
+            DB::commit();
         } catch (\Throwable $th) {
-            return back()->with('error', '¡Ocurrio un error al actualizar!');
+            DB::rollBack();
+            return  redirect()->route('usuarios.index')->with('error', '¡Ocurrio un error al actualizar!');
         }
 
 

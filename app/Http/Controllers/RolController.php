@@ -51,8 +51,15 @@ class RolController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['name' => 'required', 'permission' => 'required']);
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        DB::beginTransaction();
+        try {
+            $role = Role::create(['name' => $request->input('name')]);
+            $role->syncPermissions($request->input('permission'));
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
 
         return redirect()->route('roles.index');
     }
@@ -95,9 +102,9 @@ class RolController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, ['name' => 'required', 'permission' => 'required']);
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
         $role->name = $request->input('name');
-        $role->save();
+        $role->saveOrFail();
 
         $role->syncPermissions($request->input('permission'));
 

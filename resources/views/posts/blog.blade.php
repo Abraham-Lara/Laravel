@@ -6,6 +6,7 @@
 
 
         @include('partials.sessions-error')
+        
         <div class="container" style="margin-bottom: 2rem">
             @can('crear-blog')
                 <a class="btn btn-warning" href="{{ route('create') }}">Nuevo</a>

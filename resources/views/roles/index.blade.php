@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
     <div class="container">
-        <h2>Usuarios</h2>
+        <h2>Roles</h2>
         <hr class="border border-success border-2 opacity-50">
         @include('partials.sessions-error')
 
